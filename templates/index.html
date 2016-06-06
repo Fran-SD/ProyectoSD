@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet"  type="text/css" href="../static/css/style.css">
+<link rel="stylesheet"  type="text/css" href="../static/css/bootstrap.css">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+<script>
+	//CODIGO JQUERY PARA PERSONALIZAR COMPORTAMIENTO DE LA BARRA NAV
+	$(document).ready(function(){
+		$('.nav a').click(function(){
+			if($(this).attr('href') == '#estadisticas'){
+				$(".nav").find(".active").removeClass("active");
+   				$(this).parent().addClass("active");
+				$("div#listaReproduccion").hide();
+				$("div#estadisticas").show();
+			}
+			if($(this).attr('href') == '#listaReproduccion'){
+				$(".nav").find(".active").removeClass("active");
+   				$(this).parent().addClass("active");
+				$("div#listaReproduccion").show();
+				$("div#estadisticas").hide();
+			}
+		});
+	});
+</script>
+
+<script type="text/javascript">
+
+    //FUNCIONES LIBRERIA GOOGLE CHARTS PARA GENERAR LAS GRÁFICAS
+    
+    google.charts.load('current', {'packages':['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Canción', 'Semanas en lista'],
+          ['7 Years',     15],
+          ['Cheap Thrills',      14],
+          ['Cake by the ocean',  11],
+          ['This is what you came for', 5],
+          ['No',    15],
+          ['Duele el corazón', 7],
+          ['Faded', 15],
+          ['Stressed out', 4],
+          ['Light it up', 11],
+          ['Dont let me down', 5],
+          ['Hymn for the weekend', 8],
+          ['Fast Car', 7],
+          ['Baila conmigo', 8],
+          ['Aint your Mama', 6],
+          ['One dance', 5]
+        ]);
+
+        var options = {
+          title: 'Semanas en lista',
+          width: 400,
+          height: 300
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+
+    }
+    
+    google.charts.setOnLoadCallback(drawChart2);
+
+	function drawChart2() {
+	    var data = google.visualization.arrayToDataTable([
+          ['Canción', 'Numero de reproducciones'],
+          ['7 Years',     208143000],
+          ['Cheap Thrills',      237767320],
+          ['Cake by the ocean',  119590000],
+          ['This is what you came for', 48533593],
+          ['No',    249425407],
+          ['Duele el corazón', 58066000],
+          ['Faded', 365016000],
+          ['Stressed out', 412214500],
+          ['Light it up', 180000000],
+          ['Dont let me down', 121555000],
+          ['Hymn for the weekend', 375151000],
+          ['Fast Car', 100558976],
+          ['Baila conmigo', 27438000],
+          ['Aint your Mama', 80129219],
+          ['One dance', 66480000]
+        ]);
+
+        var options = {
+          title: 'Numero de reproducciones (en millones)',
+          width: 400,
+          height: 300
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('barchart'));
+
+        chart.draw(data, options);
+  	}
+
+</script>
+</head>
+<body>
+	<div class="container-fluid cabecera">
+		<img src="/../static/imagenes/cabecera.png" >
+	</div>
+	<div class="container-fluid">
+		<ul class="nav nav-pills nav-justified" style="margin-top:15px; border: 1px solid; border-radius: 5px;">
+		  <li class="active"><a href="#listaReproduccion" style="font-weight:bold">Lista de reproducción</a></li>
+		  <li><a href="#estadisticas" style="font-weight:bold">Estadísticas</a></li>
+		</ul>
+		<h1 style="color:blue; background-color:lightgrey; text-align: center">LA MÚSICA MÁS SONADA DEL MOMENTO</h1>
+	</div>
+	<div class="tab-content">
+		<div class="container-fluid" id="listaReproduccion" style="margin: 10px; border: 1px solid gray; border-radius: 10px">
+			<div class="col-md-8">
+			<div class="col-md-10 col-md-offset-1">
+				<div >
+				{% for item in datos %}
+					<div class="row" style="margin-bottom:25px">
+						<h4><strong>{{ item[0][0] }}</strong></h4>
+						<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ item[0][1] }}" frameborder="0" allowfullscreen></iframe>
+					</div>
+				{% endfor %}
+				</div>
+			</div>
+			</div>
+			<div class="col-md-4">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="row fila">
+						<span><a href=http://los40.com/>Los 40 principales</a></span><br>
+						<img src="/../static/imagenes/los40.jpg" WIDTH=250 HEIGHT=250 >
+					</div>
+					<div class="row fila">
+						<span><a href=http://www.europafm.com/>Europa FM</a></span><br>
+						<img src="/../static/imagenes/europafm.png" WIDTH=250 HEIGHT=250 >
+					</div>
+					<div class="row fila">
+						<span><a href=http://www.radiole.com//>Radiolé</a></span><br>
+						<img src="/../static/imagenes/radiole.jpg" WIDTH=250 HEIGHT=250 >
+					</div>			
+					<div class="row fila">
+						<span><a href=http://www.hitfm.es//>Hit FM</a></span><br>
+						<img src="/../static/imagenes/hitfm.jpeg" WIDTH=250 HEIGHT=250 >
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--ESTADISTICAS --->
+		<div class="container-fluid" id="estadisticas" style="display:none">
+			<h1>ESTADISTICAS</h1>
+			<div class="row" id="piechart"></div>
+			<div class="row" id="barchart"></div>
+		</div>
+	</div>
+</body>
+</html>
