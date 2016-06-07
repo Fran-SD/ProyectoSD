@@ -119,7 +119,7 @@ for i in array_comunes:
 		print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
 
 
-# Diagrama de barras, obtenemos el total de reproducciones de cada cancion
+# Obtenemos el total de reproducciones de cada canción
 
 totalReproducciones = []
 for item in codVideos:
